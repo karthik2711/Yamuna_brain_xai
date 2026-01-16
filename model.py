@@ -1,10 +1,16 @@
-import numpy as np
-from tensorflow.keras.models import load_model
-from preprocessing.preprocess import preprocess_data
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout
 
-def evaluate():
-    model = load_model('trained_model.h5')
-    X, y = preprocess_data('data/sample_data.csv')
-    
-    loss, acc = model.evaluate(X, y)
-    print("Accuracy:", acc)
+def build_model(input_dim):
+    model = Sequential()
+    model.add(Dense(64, activation='relu', input_dim=input_dim))
+    model.add(Dropout(0.3))
+    model.add(Dense(32, activation='relu'))
+    model.add(Dense(1, activation='sigmoid'))
+
+    model.compile(
+        optimizer='adam',
+        loss='binary_crossentropy',
+        metrics=['accuracy']
+    )
+    return model
