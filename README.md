@@ -10,7 +10,7 @@ model proposed in the Scientific Reports submission.
 
 ## How to Run
 pip install -r requirements.txt
-python main.py
+python main.py --data_path data/sample_images --epochs 15
 
 ## Note
 Sample images are provided for reproducibility. Original datasets are restricted.
