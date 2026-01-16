@@ -1,16 +1,13 @@
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 
-def build_model(input_dim):
+def build_model(input_shape, num_classes):
     model = Sequential()
-    model.add(Dense(64, activation='relu', input_dim=input_dim))
-    model.add(Dropout(0.3))
-    model.add(Dense(32, activation='relu'))
-    model.add(Dense(1, activation='sigmoid'))
-
-    model.compile(
-        optimizer='adam',
-        loss='binary_crossentropy',
-        metrics=['accuracy']
-    )
+    model.add(Conv2D(32,(3,3),activation='relu',input_shape=input_shape))
+    model.add(MaxPooling2D())
+    model.add(Conv2D(64,(3,3),activation='relu'))
+    model.add(MaxPooling2D())
+    model.add(Flatten())
+    model.add(Dense(128,activation='relu'))
+    model.add(Dense(num_classes,activation='softmax'))
     return model
