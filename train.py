@@ -1,9 +1,12 @@
+from preprocessing.preprocess import load_images
 from model.model import build_model
-from preprocessing.preprocess import preprocess_data
+from tensorflow.keras.optimizers import Adam
 
 def train():
-    X, y = preprocess_data('data/sample_data.csv')
-    model = build_model(X.shape[1])
-    
-    model.fit(X, y, epochs=20, batch_size=32, validation_split=0.2)
+    X, y = load_images('data/sample_images')
+    model = build_model(X.shape[1:], len(set(y)))
+    model.compile(optimizer=Adam(),
+                  loss='sparse_categorical_crossentropy',
+                  metrics=['accuracy'])
+    model.fit(X, y, epochs=10, batch_size=16)
     model.save('trained_model.h5')
